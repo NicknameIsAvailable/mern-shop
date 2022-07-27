@@ -1,0 +1,11 @@
+.ProductList {
+  padding: 8px 15%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/*# sourceMappingURL=Home.css.map */

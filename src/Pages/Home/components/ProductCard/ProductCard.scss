@@ -1,0 +1,16 @@
+.ProductCard {
+  margin-top: 16px;
+  margin-right: 16px;
+  padding: 16px;
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: inline-block;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+
+  h1, p, Button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}

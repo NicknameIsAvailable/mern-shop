@@ -1,0 +1,21 @@
+header {
+  background: #f1f1f1;
+  padding: 16px;
+  display: flex;
+}
+header div {
+  display: inline-block;
+}
+header .search {
+  position: relative;
+  top: -10px;
+}
+header .icons {
+  margin-right: 16px;
+  position: relative;
+  top: 24px;
+  transform: scale(1.5);
+  height: 48px;
+}
+
+/*# sourceMappingURL=styles.css.map */

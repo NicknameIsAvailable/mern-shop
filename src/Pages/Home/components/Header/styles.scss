@@ -1,0 +1,22 @@
+header {
+  background: #f1f1f1;
+  padding: 16px;
+  display: flex;
+
+  div {
+    display: inline-block;
+  }
+
+  .search {
+    position: relative;
+    top: -10px;
+  }
+
+  .icons {
+    margin-right: 16px;
+    position: relative;
+    top: 24px;
+    transform: scale(1.5);
+    height: 48px;
+  }
+}
