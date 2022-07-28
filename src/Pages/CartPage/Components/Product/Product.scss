@@ -1,0 +1,19 @@
+.product {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding: 16px;
+  display: flex;
+
+  div {
+    margin-left: 16px;
+  }
+
+  .ButtonGroup {
+    margin-top: 16px;
+    margin-left: 0;
+  }
+
+  .deleteButton {
+    margin-left: 16px;
+  }
+}

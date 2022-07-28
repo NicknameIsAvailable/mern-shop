@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Container} from "@mui/material"
 import {useParams} from "react-router-dom";
-import {productArr} from "../Home/Home";
+import productArr from "../../Components/productArr"
 import CartButton from "../../Components/CartButton";
 
 const ProductPage = () => {

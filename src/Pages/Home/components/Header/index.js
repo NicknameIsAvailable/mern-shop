@@ -6,6 +6,8 @@ import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
+export const userId = "1yZDGDovrkrGdMJl"
+
 const Header = () => {
     return (
         <header>
@@ -16,7 +18,7 @@ const Header = () => {
                 </div>
                 </Link>
 
-                <Link to="/">
+                <Link to={`/profile/${userId}`}>
                 <div className="icons">
                     <AccountBoxIcon/>
                 </div>
