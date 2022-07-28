@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, Container} from "@mui/material"
-import productArr from "../../Components/productArr"
-import Product from "./Components/Product/Product";
+import productArr from "../../Components/productArr.js"
+import Product from "./Components/Product/Product.jsx";
 
 const CartPage = () => {
 

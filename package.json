@@ -2,6 +2,8 @@
   "name": "mernshop",
   "version": "0.1.0",
   "private": true,
+  "main": "./server/index.js",
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -29,13 +31,31 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "nodemon index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/NicknameIsAvailable/mern-app.git"
+  },
+  "keywords": [
+    "mern",
+    "nodejs",
+    "react",
+    "express",
+    "mongodb",
+    "gnidapivnov"
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "author": "Gnida Pivnov <iamgenii@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NicknameIsAvailable/mern-app/issues"
   },
   "browserslist": {
     "production": [

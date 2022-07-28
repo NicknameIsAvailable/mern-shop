@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from "./components/Header/index"
+import Header from "./components/Header/Header.jsx"
 import {Button, Card, Container} from '@mui/material';
-import ProductCard from "./components/ProductCard/ProductCard";
-import productArr from "../../Components/productArr";
+import ProductCard from "./components/ProductCard/ProductCard.jsx";
+import productArr from "../../Components/productArr.js";
 import "./Home.css"
 
 const Home = () => {
