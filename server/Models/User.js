@@ -1,15 +1,22 @@
 import mongoose from "mongoose"
 
 const User = new mongoose.Schema({
-    fullName: {type: String, required: true},
+    name: {type: String, required: true},
     surname: {type: String, required: true},
     email: {type: String, required: true, unique: true},
-    phoneNumber: {type: String, required: true, unique: true},
-    adresses: {type: Array, default: []},
-    passwordHash: {type: String, required: true},
+    mobilePhone: {type: String, unique: true},
+    country: {type: String, required: true},
+    city: {type: String, required: true},
+    street: {type: String, required: true},
+    house: {type: Number, required: true},
+    building: {type: Number},
+    flat: {type: Number},
+    postalCode: {type: Number, required: true},
+    isPrivateHouse: {type: Boolean, required: true},
     avatarUrl: String,
-    cart: {type: Array, default: []},
-    timestamps: true
-})
+    passwordHash: {type: String, required: true},
+    },
+    {timestamps: true}
+)
 
 export default mongoose.model('User', User)

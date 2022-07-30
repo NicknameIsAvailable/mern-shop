@@ -7,7 +7,8 @@ const Product = new mongoose.Schema({
     buyCount: {type: Number, default: 0},
     images: {type: Array, required: true},
     feedbacks: {type: Array, default: 0},
-    timestamps: true
-})
+},
+    {timestamps: true}
+)
 
 export default mongoose.model('Product', Product)
