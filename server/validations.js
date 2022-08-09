@@ -16,3 +16,16 @@ export const registerValidation = [
     body('avatarUrl', 'Неверная ссылка на аватарку').optional().isURL(),
     body('password', 'Пароль должен быть минимум 8 символов').isLength({ min: 8 }),
 ]
+
+export const loginValidation = [
+    body('email', "Укажите электронную почту").isEmail(),
+    body('password', "Введите пароль").isLength({ min: 8})
+]
+
+export const productCreateValidation = [
+    body('title', "Введите название товара").isLength({min: 3, max: 40}).isString(),
+    body('description', "Введите описание").isLength({min: 100, max: 1500}).isString(),
+    body('price', "Введите цену").isNumeric(),
+    body('tags', "Введите тэги товара").isArray().optional().isLength({max: 15}),
+    body('images', "Добавьте изображения").isArray().isURL()
+]

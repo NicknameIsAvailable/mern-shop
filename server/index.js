@@ -1,9 +1,10 @@
 import express from "express"
 import mongoose from "mongoose"
-import {registerValidation} from "./Validations/auth.js";
-import {userController} from "./Controllers/index.js"
+import {registerValidation, loginValidation, productCreateValidation} from "./validations.js";
+import {userController, productController} from "./Controllers/index.js"
+import {checkAuth, handleValidationErrors} from "./utils/index.js";
 
-mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
     .catch((err) => console.log("Произошла ошибка при подключении к базе данных", err))
 
@@ -16,6 +17,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/auth/register', registerValidation, userController.register)
+app.post('/auth/login', loginValidation, userController.login)
+app.get('/auth/me', checkAuth, userController.getMe);
+
+app.post('/products', checkAuth, productCreateValidation, handleValidationErrors, productController.create)
 
 app.listen(4444, (err) => {
     if (err) {
