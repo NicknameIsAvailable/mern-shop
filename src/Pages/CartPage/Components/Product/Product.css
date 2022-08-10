@@ -1,0 +1,18 @@
+.product {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding: 16px;
+  display: flex;
+}
+.product div {
+  margin-left: 16px;
+}
+.product .ButtonGroup {
+  margin-top: 16px;
+  margin-left: 0;
+}
+.product .deleteButton {
+  margin-left: 16px;
+}
+
+/*# sourceMappingURL=Product.css.map */
