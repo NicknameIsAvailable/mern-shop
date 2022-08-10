@@ -101,9 +101,24 @@ export const getMe = async (req, res) => {
             });
         }
 
+        const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+
+        if (!isValidPass) {
+            return res.status(400).json({
+                message: "Неверный логин и пароль"
+            })
+        }
+
+        const token = jwt.sign({
+            _id: user._id,
+        }, '~A|1Q5m5ki7Gg4za',
+        {
+            expiresIn: "30d"
+        })
+
         const { passwordHash, ...userData } = user._doc;
 
-        res.json(userData);
+        res.json({...userData, token});
     } catch (err) {
         console.log(err);
         res.status(500).json({

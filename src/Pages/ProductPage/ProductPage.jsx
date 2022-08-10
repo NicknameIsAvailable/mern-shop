@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container} from "@mui/material"
+import {Container} from "@mui/material"
 import {useParams} from "react-router-dom";
 import productArr from "../../Components/productArr.js"
 import CartButton from "../../Components/CartButton.jsx";

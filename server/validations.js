@@ -26,6 +26,6 @@ export const productCreateValidation = [
     body('title', "Введите название товара").isLength({min: 3, max: 40}).isString(),
     body('description', "Введите описание").isLength({min: 100, max: 1500}).isString(),
     body('price', "Введите цену").isNumeric(),
-    body('tags', "Введите тэги товара").isArray().optional().isLength({max: 15}),
+    body('tags', "Введите тэги товара (введите тэги)").isArray().isLength({max: 15}),
     body('images', "Добавьте изображения").isArray().isURL()
 ]

@@ -21,6 +21,7 @@ app.post('/auth/login', loginValidation, userController.login)
 app.get('/auth/me', checkAuth, userController.getMe);
 
 app.post('/products', checkAuth, productCreateValidation, handleValidationErrors, productController.create)
+app.patch('/products/:id', checkAuth, productCreateValidation, handleValidationErrors, productController.update)
 
 app.listen(4444, (err) => {
     if (err) {

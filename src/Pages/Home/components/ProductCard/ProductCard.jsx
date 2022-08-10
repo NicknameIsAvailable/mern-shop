@@ -1,9 +1,8 @@
 import React from 'react';
 import "./ProductCard.css"
-import {Card, Button} from '@mui/material'
+import {Card} from '@mui/material'
 import {Link} from "react-router-dom"
 import CartButton from "../../../../Components/CartButton.jsx";
-import {cart} from "../../../../Components/cart.jsx";
 
 const ProductCard = (props) => {
     return (

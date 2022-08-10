@@ -5,6 +5,7 @@ import "./App.css"
 import ProductPage from "./Pages/ProductPage/ProductPage.jsx";
 import Header from "./Pages/Home/components/Header/Header.jsx"
 import CartPage from "./Pages/CartPage/CartPage.jsx";
+import Registration from "./Pages/Registration/Registration.jsx";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage.jsx";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Routes>
               <Route path="/" element={<Home/>}/>
               <Route path="/profile/:userId" element={<ProfilePage/>}/>
+              <Route path="/profile/registration" element={<Registration/>}/>
               <Route path="cart" element={<CartPage/>}/>
               <Route path="product/:id" element={<ProductPage/>}/>
           </Routes>
