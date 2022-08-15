@@ -29,3 +29,8 @@ export const productCreateValidation = [
     body('tags', "Введите тэги товара (введите тэги)").isArray().isLength({max: 15}),
     body('images', "Добавьте изображения").isArray().isURL()
 ]
+
+export const commentValidation = [
+    body('text', "Введите текст комментария").isLength({min: 3, max: 200}).isString(),
+    body('rating', "Поставьте оценку").isNumeric().isInt({min: 0, max: 5})
+]

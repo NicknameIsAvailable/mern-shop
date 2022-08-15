@@ -1,6 +1,6 @@
 import express from "express"
 import mongoose from "mongoose"
-import {registerValidation, loginValidation, productCreateValidation} from "./validations.js";
+import {registerValidation, loginValidation, productCreateValidation, commentValidation} from "./validations.js";
 import {userController, productController} from "./Controllers/index.js"
 import {checkAuth, handleValidationErrors} from "./utils/index.js";
 
@@ -22,6 +22,10 @@ app.get('/auth/me', checkAuth, userController.getMe);
 
 app.post('/products', checkAuth, productCreateValidation, handleValidationErrors, productController.create)
 app.patch('/products/:id', checkAuth, productCreateValidation, handleValidationErrors, productController.update)
+app.get('/products', productController.getAll)
+app.get('/products/:id', productController.getOne)
+app.delete('/products/:id', checkAuth, productController.remove);
+app.post('/products/:id/addComment', commentValidation, checkAuth, productController.addComment)
 
 app.listen(4444, (err) => {
     if (err) {

@@ -6,9 +6,10 @@ const Product = new mongoose.Schema({
     price: {type: Number, required: true},
     tags: {type: Array, default: []},
     buyCount: {type: Number, default: 0},
+    viewsCount: {type: Number, default: 0},
+    count: {type: Number, default: 0, required: true},
     images: {type: Array, required: true},
-    feedbacks: {type: Array, default: 0},
-    user: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
     },
     {timestamps: true}
 )
