@@ -6,7 +6,7 @@ const Comment = new mongoose.Schema({
     rating: {type: Number},
     text: {type: String, trim: true, required: true},
     date: {type: Date, default: Date.now},
-    Product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product'}
+    product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product'}
 })
 
 export default mongoose.model('Comment', Comment);

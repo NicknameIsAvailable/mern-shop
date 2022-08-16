@@ -1,5 +1,6 @@
 import Product from "../Models/Product.js";
-import Comment from "../Models/Comment.js";
+
+// создание продукта
 
 export const create = async (req, res) => {
     try {
@@ -25,9 +26,11 @@ export const create = async (req, res) => {
     }
 }
 
+// обновление продукта
+
 export const update = async (req, res) => {
     try {
-        const productId = req.params.id;
+        const productId = req.params.productId;
 
         await Product.updateOne(
             {
@@ -56,6 +59,7 @@ export const update = async (req, res) => {
     }
 };
 
+// удаление продукта
 
 export const remove = async (req, res) => {
     try {
@@ -81,6 +85,7 @@ export const remove = async (req, res) => {
 
                 res.json({
                     success: true,
+                    message: "Продукт удален"
                 });
             },
         );
@@ -91,6 +96,8 @@ export const remove = async (req, res) => {
         });
     }
 };
+
+// получение всех товаров
 
 export const getAll = async (req, res) => {
     try {
@@ -103,6 +110,8 @@ export const getAll = async (req, res) => {
         });
     }
 };
+
+// получение определенного продукта
 
 export const getOne = async (req, res) => {
     try {
@@ -143,29 +152,3 @@ export const getOne = async (req, res) => {
     }
 };
 
-export const addComment = async (req, res) => {
-    const productId = req.params.id
-
-    try {
-        const comment = new Comment({
-            user: req.userId,
-            rating: req.body.rating,
-            text: req.body.text,
-            post: productId
-        })
-
-        await comment.save();
-        const postRelated = await Product.findById(productId);
-        postRelated.comments.push(comment);
-        await postRelated.save(function(err) {
-            if(err) {console.log(err)}
-            res.redirect('/')
-        })
-    }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({
-            message: "Не удалось оставить комментарий"
-        })
-    }
-}

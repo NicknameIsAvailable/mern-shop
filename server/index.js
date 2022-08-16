@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import {registerValidation, loginValidation, productCreateValidation, commentValidation} from "./validations.js";
-import {userController, productController} from "./Controllers/index.js"
+import {userController, productController, commentController} from "./Controllers/index.js"
 import {checkAuth, handleValidationErrors} from "./utils/index.js";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
@@ -21,11 +21,18 @@ app.post('/auth/login', loginValidation, userController.login)
 app.get('/auth/me', checkAuth, userController.getMe);
 
 app.post('/products', checkAuth, productCreateValidation, handleValidationErrors, productController.create)
-app.patch('/products/:id', checkAuth, productCreateValidation, handleValidationErrors, productController.update)
+app.patch('/products/:productId', checkAuth, productCreateValidation, handleValidationErrors, productController.update)
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
 app.delete('/products/:id', checkAuth, productController.remove);
-app.post('/products/:id/addComment', commentValidation, checkAuth, productController.addComment)
+
+app.post('/products/:id/comments', commentValidation, checkAuth, commentController.add)
+app.delete('/products/:id/comments/:commentId', commentValidation, checkAuth, commentController.remove)
+app.patch('/comments/:commentId', checkAuth, commentValidation, handleValidationErrors, commentController.update)
+app.get('/comments', commentController.getAll)
+app.get('/products/:id/comments/', commentController.getAllOfProduct)
+app.get('/products/:id/comments/:commentId', commentController.getOne)
+app.delete('/comments/:commentId', commentController.remove)
 
 app.listen(4444, (err) => {
     if (err) {
