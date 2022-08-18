@@ -32,8 +32,11 @@ export const register = async (req, res) => {
             res.send({message: "Такой пользователь уже существует"})
         }
 
+        console.log(user)
+
         const token = jwt.sign({
                 _id: user._id,
+                role: user.role,
             }, '~A|1Q5m5ki7Gg4za',
             {
                 expiresIn: '30d'

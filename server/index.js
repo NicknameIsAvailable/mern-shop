@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import {registerValidation, loginValidation, productCreateValidation, commentValidation} from "./validations.js";
 import {userController, productController, commentController} from "./Controllers/index.js"
 import {checkAuth, handleValidationErrors} from "./utils/index.js";
+import checkAdmin from "./utils/checkAdmin.js";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
@@ -18,13 +19,15 @@ app.get('/', (req, res) => {
 
 app.post('/auth/register', registerValidation, userController.register)
 app.post('/auth/login', loginValidation, userController.login)
-app.get('/auth/me', checkAuth, userController.getMe);
+app.get('/auth/me', userController.getMe);
 
-app.post('/products', checkAuth, productCreateValidation, handleValidationErrors, productController.create)
-app.patch('/products/:productId', checkAuth, productCreateValidation, handleValidationErrors, productController.update)
+app.post('/products', checkAuth, checkAdmin, productCreateValidation, handleValidationErrors, productController.create)
+app.patch('/products/:productId', checkAuth, checkAdmin, productCreateValidation, handleValidationErrors, productController.update)
+app.delete('/products/:id', checkAuth, checkAdmin, productController.remove);
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
-app.delete('/products/:id', checkAuth, productController.remove);
+
+
 
 app.post('/products/:id/comments', commentValidation, checkAuth, commentController.add)
 app.delete('/products/:id/comments/:commentId', commentValidation, checkAuth, commentController.remove)

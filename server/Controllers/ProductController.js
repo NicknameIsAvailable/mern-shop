@@ -1,5 +1,7 @@
 import Product from "../Models/Product.js";
 
+// TODO: возможность добавлять товары в корзину
+
 // создание продукта
 
 export const create = async (req, res) => {
