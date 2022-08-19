@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import {secret} from "../secret.js";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (req, res, next) => {
@@ -6,7 +7,7 @@ export default (req, res, next) => {
 
     if (token) {
         try {
-            const decoded = jwt.verify(token, '~A|1Q5m5ki7Gg4za');
+            const decoded = jwt.verify(token, secret);
 
             req.userId = decoded._id;
             next();

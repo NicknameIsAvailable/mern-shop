@@ -17,9 +17,15 @@ app.get('/', (req, res) => {
     res.send('Сервер запущен')
 })
 
+// контроллер пользователей
+
 app.post('/auth/register', registerValidation, userController.register)
 app.post('/auth/login', loginValidation, userController.login)
 app.get('/auth/me', userController.getMe);
+app.patch('/users/update', checkAuth, userController.update)
+app.delete('/users', checkAuth, userController.remove)
+
+// контроллер продуктов
 
 app.post('/products', checkAuth, checkAdmin, productCreateValidation, handleValidationErrors, productController.create)
 app.patch('/products/:productId', checkAuth, checkAdmin, productCreateValidation, handleValidationErrors, productController.update)
@@ -27,7 +33,7 @@ app.delete('/products/:id', checkAuth, checkAdmin, productController.remove);
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
 
-
+// контроллер комментариев
 
 app.post('/products/:id/comments', commentValidation, checkAuth, commentController.add)
 app.delete('/products/:id/comments/:commentId', commentValidation, checkAuth, commentController.remove)

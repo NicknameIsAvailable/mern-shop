@@ -1,6 +1,9 @@
 import bcrypt from "bcrypt";
 import User from "../Models/User.js";
 import jwt from "jsonwebtoken";
+import {secret} from "../secret.js";
+
+// регистрация
 
 export const register = async (req, res) => {
     try {
@@ -37,14 +40,14 @@ export const register = async (req, res) => {
         const token = jwt.sign({
                 _id: user._id,
                 role: user.role,
-            }, '~A|1Q5m5ki7Gg4za',
+            }, secret,
             {
                 expiresIn: '30d'
             })
 
         const {passwordHash, ...userData} = user._doc
 
-        res.json({
+        res.status(200).json({
             ...userData, token
         })
 
@@ -55,6 +58,8 @@ export const register = async (req, res) => {
         })
     }
 }
+
+// логин
 
 export const login = async (req, res) => {
     try {
@@ -76,14 +81,14 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({
                 _id: user._id,
-            }, '~A|1Q5m5ki7Gg4za',
+            }, secret,
             {
                 expiresIn: '30d'
             })
 
         const {passwordHash, ...userData} = user._doc
 
-        res.json({
+        res.status(200).json({
             ...userData, token
         })
     } catch (err) {
@@ -93,6 +98,8 @@ export const login = async (req, res) => {
         })
     }
 }
+
+// получение пользователя
 
 export const getMe = async (req, res) => {
     try {
@@ -114,14 +121,14 @@ export const getMe = async (req, res) => {
 
         const token = jwt.sign({
             _id: user._id,
-        }, '~A|1Q5m5ki7Gg4za',
+        }, secret,
         {
             expiresIn: "30d"
         })
 
         const { passwordHash, ...userData } = user._doc;
 
-        res.json({...userData, token});
+        res.status(200).json({...userData, token});
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -129,3 +136,72 @@ export const getMe = async (req, res) => {
         });
     }
 };
+
+// изменение информации о пользователе
+
+export const update = async (req, res) => {
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, secret)
+
+            const password = req.body.password
+            const salt = await bcrypt.genSalt(10)
+            const hash = await bcrypt.hash(password, salt)
+
+            await User.updateOne({
+                _id: decoded._id
+            },
+                {
+                    name: req.body.name,
+                    surname: req.body.surname,
+                    avatarUrl: req.body.avatarUrl,
+                    country: req.body.country,
+                    city: req.body.city,
+                    street: req.body.street,
+                    house: req.body.house,
+                    building: req.body.building,
+                    flat: req.body.flat,
+                    postalCode: req.body.postalCode,
+                    isPrivateHouse: req.body.isPrivateHouse,
+                    passwordHash: hash
+                })
+
+            res.status(200).json({
+                success: true,
+                message: "Данные обновлены"
+            })
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).json({
+                message: 'Нет доступа',
+            });
+        }
+    }
+}
+
+// удаление пользователя
+
+export const remove = async (req, res) => {
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, secret)
+
+            User.findById(decoded._id).deleteOne().exec()
+
+            res.status(200).json({
+                success: true,
+                message: "Пользователь удален"
+            })
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                message: 'Нет доступа',
+            });
+        }
+    }
+}

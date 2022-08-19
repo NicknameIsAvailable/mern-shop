@@ -113,6 +113,12 @@ export const getAll = async (req, res) => {
     }
 };
 
+// добавление товара в корзину
+
+export const addCart = async (req, res) => {
+
+}
+
 // получение определенного продукта
 
 export const getOne = async (req, res) => {
