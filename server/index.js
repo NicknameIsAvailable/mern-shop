@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 app.post('/auth/register', registerValidation, userController.register)
 app.post('/auth/login', loginValidation, userController.login)
 app.get('/auth/me', userController.getMe);
+app.get('/users', userController.getAll)
 app.patch('/users/update', checkAuth, userController.update)
 app.delete('/users', checkAuth, userController.remove)
 
@@ -32,6 +33,8 @@ app.patch('/products/:productId', checkAuth, checkAdmin, productCreateValidation
 app.delete('/products/:id', checkAuth, checkAdmin, productController.remove);
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
+app.post('/users/cart/:id', checkAuth, productController.addCart);
+app.delete('/users/cart/:id', checkAuth, productController.cartDelete);
 
 // контроллер комментариев
 

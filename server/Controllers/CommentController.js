@@ -15,10 +15,12 @@ export const add = async (req, res) => {
         })
 
         await comment.save();
-        const postRelated = await Product.findById(productId);
-        postRelated.comments.push(comment);
-        await postRelated.save(function(err) {
-            if(err) {console.log(err)}
+        const product = await Product.findById(productId);
+        product.comments.push(comment);
+        await product.save((err) => {
+            if(err) {
+                console.log(err)
+            }
             res.redirect('/')
         })
     }

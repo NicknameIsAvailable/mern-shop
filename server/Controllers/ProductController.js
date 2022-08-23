@@ -1,6 +1,8 @@
 import Product from "../Models/Product.js";
+import User from "../Models/User.js";
+import {secret} from "../secret.js";
+import jwt from "jsonwebtoken";
 
-// TODO: возможность добавлять товары в корзину
 
 // создание продукта
 
@@ -13,7 +15,8 @@ export const create = async (req, res) => {
             buyCount: req.body.buyCount,
             images: req.body.images,
             tags: req.body.tags.split(','),
-            user: req.userId
+            user: req.userId,
+            count: req.body.count
         })
 
         const product = await doc.save()
@@ -113,12 +116,6 @@ export const getAll = async (req, res) => {
     }
 };
 
-// добавление товара в корзину
-
-export const addCart = async (req, res) => {
-
-}
-
 // получение определенного продукта
 
 export const getOne = async (req, res) => {
@@ -160,3 +157,73 @@ export const getOne = async (req, res) => {
     }
 };
 
+// добавление товара в корзину
+
+export const addCart = async (req, res) => {
+    const productId = req.params.id
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+    const decoded = jwt.verify(token, secret)
+    const user = await User.findById(decoded._id)
+
+    if (token) {
+        try {
+            const product = await Product.findById(productId)
+            if (product.count > 0) {
+                user.cart.push(productId)
+                user.save()
+
+                product.inCart.push(decoded._id)
+                await product.save()
+
+                res.json({
+                    success: true,
+                    message: "Товар добавлен в корзину"
+                })
+            } else {
+                res.status(404).json({
+                    success: false,
+                    message: "Товары закончились"
+                })
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(404).json({
+                message: "Товар не найден",
+            });
+        }
+    }
+}
+
+// покупка товара
+
+export const buyProduct = async (req, res) => {
+
+}
+
+// удаление товара из корзины
+
+export const cartDelete = async (req, res) => {
+    const productId = req.params.id
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+    const decoded = jwt.verify(token, secret)
+    const user = await User.findById(decoded._id)
+
+    if (token) {
+        try {
+            user.cart.pull(productId)
+            user.save()
+
+            res.json({
+                success: true,
+                message: "Товар удален из корзины"
+            })
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).json({
+                success: false,
+                message: "Не удалось удалить товар"
+            });
+        }
+    }
+}

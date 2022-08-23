@@ -7,9 +7,10 @@ const Product = new mongoose.Schema({
     tags: {type: Array, default: []},
     buyCount: {type: Number, default: 0},
     viewsCount: {type: Number, default: 0},
-    count: {type: Number, default: 0, required: true},
+    inCart: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    count: {type: Number, required: true},
     images: {type: Array, required: true},
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
     },
     {timestamps: true}
 )

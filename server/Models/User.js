@@ -4,7 +4,6 @@ const User = new mongoose.Schema({
     name: {type: String, required: true},
     surname: {type: String, required: true},
     email: {type: String, required: true, unique: true},
-    role: {type: String, enum: ['consumer', 'admin'], default: 'consumer'},
     mobilePhone: {type: String, unique: true},
     cart: {type: Array, default: []},
     country: {type: String, required: true},
