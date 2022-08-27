@@ -162,11 +162,11 @@ export const getOne = async (req, res) => {
 export const addCart = async (req, res) => {
     const productId = req.params.id
     const token = (req.headers.authorization).replace(/Bearer\s?/, '')
-    const decoded = jwt.verify(token, secret)
-    const user = await User.findById(decoded._id)
 
     if (token) {
         try {
+            const decoded = jwt.verify(token, secret)
+            const user = await User.findById(decoded._id)
             const product = await Product.findById(productId)
             if (product.count > 0) {
                 user.cart.push(productId)
@@ -192,12 +192,6 @@ export const addCart = async (req, res) => {
             });
         }
     }
-}
-
-// покупка товара
-
-export const buyProduct = async (req, res) => {
-
 }
 
 // удаление товара из корзины

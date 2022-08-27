@@ -10,6 +10,7 @@ const User = new mongoose.Schema({
     city: {type: String, required: true},
     street: {type: String, required: true},
     house: {type: Number, required: true},
+    orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
     building: {type: Number},
     flat: {type: Number},
     postalCode: {type: Number, required: true},

@@ -4,6 +4,7 @@ import {registerValidation, loginValidation, productCreateValidation, commentVal
 import {userController, productController, commentController} from "./Controllers/index.js"
 import {checkAuth, handleValidationErrors} from "./utils/index.js";
 import checkAdmin from "./utils/checkAdmin.js";
+import * as orderController from "./Controllers/OrderController.js";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
@@ -35,6 +36,14 @@ app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
 app.post('/users/cart/:id', checkAuth, productController.addCart);
 app.delete('/users/cart/:id', checkAuth, productController.cartDelete);
+
+// контроллер заказов
+
+app.delete('/users/orders/:orderId', checkAuth, orderController.deleteOrder)
+app.get('/orders/', checkAuth, checkAdmin, orderController.getOrders)
+app.get('/orders/:orderId/', checkAuth, orderController.getOrder)
+app.post('/users/cart/',checkAuth, orderController.createOrder)
+app.post('/users/products/:id', checkAuth, orderController.buyOne)
 
 // контроллер комментариев
 
