@@ -1,10 +1,10 @@
-// покупка всех товаров из корзины
-
 import jwt from "jsonwebtoken";
 import {secret} from "../secret.js";
 import User from "../Models/User.js";
 import Order from "../Models/Order.js";
 import Product from "../Models/Product.js";
+
+// покупка всех товаров из корзины
 
 export const createOrder = async (req, res) => {
     const token = (req.headers.authorization).replace(/Bearer\s?/, '')
@@ -157,7 +157,7 @@ export const getOrders = async (req, res) => {
     }
 }
 
-// получение заказа
+// получение одного заказа
 
 export const getOrder = async (req, res) => {
     try {
@@ -177,3 +177,64 @@ export const getOrder = async (req, res) => {
 
 // получение заказов одного пользователя
 
+export const getUserOrders = async (req, res) => {
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+    if(token) {
+        try {
+            const decoded = jwt.verify(token, secret)
+            const orders = await Order.find({user: decoded._id})
+            res.json(orders)
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                message: 'Не удалось получить заказы',
+            });
+        }
+    }
+}
+
+// Изменение статуса заказа
+
+export const changeOrderStatus = async (req, res) => {
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+    const orderId = req.params.orderId
+
+    if (token) {
+        try {
+            const order = await Order.findById(orderId).exec()
+            const status = req.body.status
+
+            if (status === 0) {
+                order.status = "Заказ обрабатывается"
+            } else if (status === 1) {
+                order.status = "Собран"
+            } else if (status === 2) {
+                order.status = "Отправлен со склада"
+            } else if (status === 3) {
+                order.status = "Покинул страну отправления"
+            } else if (status === 4) {
+                order.status = "Прибыл в страну назначения"
+            } else if (status === 5) {
+                order.status = "Скоро будет у вас"
+            } else if (status === 6) {
+                order.status = "Уже у вас"
+            } else if (status === 7) {
+                order.status = "Заказ задерживается"
+            } else if (status === 8) {
+                order.status = "Что-то пошло не так во время доставки заказа. Мы отправили вам письмо с подробностями"
+            }
+            order.save()
+
+            res.status(200).json({
+                success: true,
+                message: `Статус заказа изменен на ${order.status}`
+            })
+
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                message: 'Не удалось получить заказы',
+            });
+        }
+    }
+}

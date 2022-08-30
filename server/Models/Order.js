@@ -9,6 +9,7 @@ import mongoose from "mongoose"
 const Order = new mongoose.Schema({
     user: {type: String, required: true},
     products: {type: Array, required: true},
+    status: {type: String, default: "Заказ обрабатывается"}
 }, {
     timestamps: true
 })

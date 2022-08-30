@@ -3,8 +3,9 @@ import {body} from "express-validator"
 export const registerValidation = [
     body('name', 'Укажите имя').isLength({ min: 3 }),
     body('surname', 'Укажите фамилию').isLength({ min: 3 }),
-    body('email', 'Неверный формат почты').isEmail(),
+    body('email', 'Неверный формат почты').isEmail().normalizeEmail(),
     body('mobilePhone', 'Укажите номер телефона').optional(),
+    body('role', 'Укажите роль пользователя'),
     body('country', 'Укажите вашу страну').isLength({min: 3}),
     body('city', 'Укажите ваш город').isLength({min: 2}),
     body('street', 'Укажите ваш город').isLength({min: 5}),
@@ -34,4 +35,10 @@ export const productCreateValidation = [
 export const commentValidation = [
     body('text', "Введите текст комментария").isLength({min: 3, max: 200}).isString(),
     body('rating', "Поставьте оценку").isNumeric().isInt({min: 0, max: 5})
+]
+
+export const orderValidation = [
+    body('user', "Укажите пользователя, который сделал заказ").isString(),
+    body('products', "Укажите товары, которые должны быть в заказе").isArray(),
+    body('status', "Укажите статус товара").isString()
 ]

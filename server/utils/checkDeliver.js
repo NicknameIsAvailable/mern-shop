@@ -11,8 +11,7 @@ export default async (req, res, next) => {
             const decoded = jwt.verify(token, secret);
             req.user = await User.findById(decoded._id).exec()
 
-            if (!req.user.role.includes('admin')) {
-
+            if (!req.user.role.includes('deliver')) {
                 return res.status(403).json({
                     message: 'у вас недостаточно прав',
                 })

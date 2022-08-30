@@ -5,6 +5,7 @@ import {userController, productController, commentController} from "./Controller
 import {checkAuth, handleValidationErrors} from "./utils/index.js";
 import checkAdmin from "./utils/checkAdmin.js";
 import * as orderController from "./Controllers/OrderController.js";
+import checkDeliver from "./utils/checkDeliver.js";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
@@ -20,11 +21,11 @@ app.get('/', (req, res) => {
 
 // контроллер пользователей
 
-app.post('/auth/register', registerValidation, userController.register)
-app.post('/auth/login', loginValidation, userController.login)
+app.post('/auth/register', registerValidation, handleValidationErrors, userController.register)
+app.post('/auth/login', loginValidation, handleValidationErrors, userController.login)
 app.get('/auth/me', userController.getMe);
 app.get('/users', userController.getAll)
-app.patch('/users/update', checkAuth, userController.update)
+app.patch('/users/update', checkAuth, handleValidationErrors, userController.update)
 app.delete('/users', checkAuth, userController.remove)
 
 // контроллер продуктов
@@ -34,20 +35,22 @@ app.patch('/products/:productId', checkAuth, checkAdmin, productCreateValidation
 app.delete('/products/:id', checkAuth, checkAdmin, productController.remove);
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
-app.post('/users/cart/:id', checkAuth, productController.addCart);
+app.post('/users/cart/:id', checkAuth, handleValidationErrors, productController.addCart);
 app.delete('/users/cart/:id', checkAuth, productController.cartDelete);
 
 // контроллер заказов
 
-app.delete('/users/orders/:orderId', checkAuth, orderController.deleteOrder)
+app.delete('/orders/:orderId', checkAuth, orderController.deleteOrder)
 app.get('/orders/', checkAuth, checkAdmin, orderController.getOrders)
+app.get('/users/orders/', checkAuth, orderController.getUserOrders)
 app.get('/orders/:orderId/', checkAuth, orderController.getOrder)
-app.post('/users/cart/',checkAuth, orderController.createOrder)
-app.post('/users/products/:id', checkAuth, orderController.buyOne)
+app.patch('/orders/:orderId', checkAuth, checkDeliver, handleValidationErrors, orderController.changeOrderStatus)
+app.post('/users/cart/',checkAuth, handleValidationErrors, orderController.createOrder)
+app.post('/users/products/:id', checkAuth, handleValidationErrors, orderController.buyOne)
 
 // контроллер комментариев
 
-app.post('/products/:id/comments', commentValidation, checkAuth, commentController.add)
+app.post('/products/:id/comments', commentValidation, checkAuth, handleValidationErrors, commentController.add)
 app.delete('/products/:id/comments/:commentId', commentValidation, checkAuth, commentController.remove)
 app.patch('/comments/:commentId', checkAuth, commentValidation, handleValidationErrors, commentController.update)
 app.get('/comments', commentController.getAll)
