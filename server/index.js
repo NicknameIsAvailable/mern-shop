@@ -1,11 +1,15 @@
 import express from "express"
 import mongoose from "mongoose"
-import {registerValidation, loginValidation, productCreateValidation, commentValidation} from "./validations.js";
+import {
+    registerValidation,
+    loginValidation,
+    productCreateValidation,
+    commentValidation,
+    orderValidation
+} from "./validations.js";
 import {userController, productController, commentController} from "./Controllers/index.js"
-import {checkAuth, handleValidationErrors} from "./utils/index.js";
-import checkAdmin from "./utils/checkAdmin.js";
+import {checkAuth, handleValidationErrors, checkAdmin, checkDeliver} from "./utils/index.js";
 import * as orderController from "./Controllers/OrderController.js";
-import checkDeliver from "./utils/checkDeliver.js";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
@@ -45,8 +49,8 @@ app.get('/orders/', checkAuth, checkAdmin, orderController.getOrders)
 app.get('/users/orders/', checkAuth, orderController.getUserOrders)
 app.get('/orders/:orderId/', checkAuth, orderController.getOrder)
 app.patch('/orders/:orderId', checkAuth, checkDeliver, handleValidationErrors, orderController.changeOrderStatus)
-app.post('/users/cart/',checkAuth, handleValidationErrors, orderController.createOrder)
-app.post('/users/products/:id', checkAuth, handleValidationErrors, orderController.buyOne)
+app.post('/users/cart/',checkAuth, handleValidationErrors, orderValidation, orderController.createOrder)
+app.post('/users/products/:id', checkAuth, handleValidationErrors, orderValidation, orderController.buyOne)
 
 // контроллер комментариев
 

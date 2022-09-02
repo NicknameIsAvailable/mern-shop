@@ -13,7 +13,7 @@ export const registerValidation = [
     body('building', 'Укажите корпус вашего дома').isNumeric().optional(),
     body('flat', 'Укажите номер вашей квартиры').isNumeric().optional(),
     body('postalCode', 'Укажите ваш почтовый индекс').isPostalCode("any"),
-    body('isPrivateHouse', 'Укажите вы живите в частном доме?').isBoolean(),
+    body('isPrivateHouse', 'Укажите вы живете в частном доме?').isBoolean(),
     body('avatarUrl', 'Неверная ссылка на аватарку').optional().isURL(),
     body('password', 'Пароль должен быть минимум 8 символов').isLength({ min: 8 }),
 ]
@@ -40,5 +40,13 @@ export const commentValidation = [
 export const orderValidation = [
     body('user', "Укажите пользователя, который сделал заказ").isString(),
     body('products', "Укажите товары, которые должны быть в заказе").isArray(),
-    body('status', "Укажите статус товара").isString()
+    body('status', "Укажите статус товара").isString(),
+    body('country', 'Укажите вашу страну').isLength({min: 3}),
+    body('deliverCity', 'Укажите ваш город').isLength({min: 2}),
+    body('deliverStreet', 'Укажите ваш город').isLength({min: 5}),
+    body('deliverHouse', 'Укажите ваш дом').isNumeric(),
+    body('deliverBuilding', 'Укажите корпус вашего дома').isNumeric().optional(),
+    body('deliverFlat', 'Укажите номер вашей квартиры').isNumeric().optional(),
+    body('deliverPostalCode', 'Укажите ваш почтовый индекс').isPostalCode("any"),
+    body('deliverIsPrivateHouse', 'Укажите вы живете в частном доме?').isBoolean(),
 ]

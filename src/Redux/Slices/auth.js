@@ -2,20 +2,36 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {createSlice} from "@reduxjs/toolkit";
 import axios from "../../axios.js";
 
-export const fetchAuth = createAsyncThunk("auth/fetchAuth", async (params) => {
+export const fetchLogin = createAsyncThunk("/auth/fetchAuth", async (params) => {
     const {data} = await axios.post('/auth/login', params)
     return data
 })
 
-export const fetchRegister = createAsyncThunk("auth/fetchRegister", async (params) => {
-    const {data} = await axios.post('auth/register', params)
+export const fetchRegister = createAsyncThunk("/auth/fetchRegister", async (params) => {
+    const {data} = await axios.post('/auth/register', params)
     return data
 })
 
-export const fetchAuthMe = createAsyncThunk("auth/fetchAuthMe", async () => {
-    const {data} = await axios.get('auth/me')
+export const fetchAuthMe = createAsyncThunk("/auth/fetchAuthMe", async () => {
+    const {data} = await axios.get('/auth/me')
     return data
 })
+
+export const fetchUsers  = createAsyncThunk("/fetchUsers", async () => {
+    const {data} = await axios.get('/users')
+    return data
+})
+
+export const fetchUpdateUsers  = createAsyncThunk("/fetchUsers/update", async () => {
+    const {data} = await axios.patch('/users/update')
+    return data
+})
+
+export const fetchDeleteUsers  = createAsyncThunk("/fetchUsers/update", async () => {
+    const {data} = await axios.delete('/users')
+    return data
+})
+
 
 const initialState = {
     data: null,
@@ -32,15 +48,15 @@ const authSlice = createSlice({
     },
 
     extraReducers: {
-        [fetchAuth.pending] : (state) => {
+        [fetchLogin.pending] : (state) => {
             state.status = "loading"
             state.data = null
         },
-        [fetchAuth.fulfilled] : (state, action) => {
+        [fetchLogin.fulfilled] : (state, action) => {
             state.status = "loaded"
             state.data = action.payload
         },
-        [fetchAuth.rejected] : (state) => {
+        [fetchLogin.rejected] : (state) => {
             state.status = "error"
             state.data = null
         },
@@ -65,6 +81,42 @@ const authSlice = createSlice({
             state.data = action.payload
         },
         [fetchRegister.rejected] : (state) => {
+            state.status = 'error'
+            state.data = null
+        },
+        [fetchUsers.pending] : (state) => {
+            state.status = 'loading'
+            state.data = null
+        },
+        [fetchUsers.fulfilled] : (state, action) => {
+            state.status = 'loaded'
+            state.data = action.payload
+        },
+        [fetchUsers.rejected] : (state) => {
+            state.status = 'error'
+            state.data = null
+        },
+        [fetchUpdateUsers.pending] : (state) => {
+            state.status = 'loading'
+            state.data = null
+        },
+        [fetchUpdateUsers.fulfilled] : (state, action) => {
+            state.status = 'loaded'
+            state.data = action.payload
+        },
+        [fetchUpdateUsers.rejected] : (state) => {
+            state.status = 'error'
+            state.data = null
+        },
+        [fetchDeleteUsers.pending] : (state) => {
+            state.status = 'loading'
+            state.data = null
+        },
+        [fetchDeleteUsers.fulfilled] : (state, action) => {
+            state.status = 'loaded'
+            state.data = action.payload
+        },
+        [fetchDeleteUsers.rejected] : (state) => {
             state.status = 'error'
             state.data = null
         }

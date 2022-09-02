@@ -1,14 +1,7 @@
 import React from 'react';
 import {Button, Container} from "@mui/material";
-import {Navigate} from "react-router-dom";
 
 const ProfilePage = () => {
-
-    const isAuth = false
-
-    if (!isAuth) {
-        return (<Navigate to="/profile/registration"/>)
-    }
 
     return (
         <Container className="profilePage">

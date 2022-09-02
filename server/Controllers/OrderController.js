@@ -15,10 +15,18 @@ export const createOrder = async (req, res) => {
             const user = await User.findById(decoded._id)
 
             if (user.cart.length !== 0) {
-
                 const order = new Order({
                     user: decoded._id,
                     products: user.cart,
+                    deliverType: req.body.deliverType,
+                    deliverCountry: req.body.deliverCountry,
+                    deliverCity: req.body.deliverCity,
+                    deliverStreet: req.body.deliverStreet,
+                    deliverHouse: req.body.deliverHouse,
+                    deliverBuilding: req.body.deliverBuilding,
+                    deliverFlat: req.body.deliverFlat,
+                    deliverPostalCode: req.body.deliverPostalCode,
+                    isPrivateHouse: req.body.isPrivateHouse,
                 })
 
                 await order.save()
@@ -65,9 +73,19 @@ export const buyOne = async (req, res) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, secret)
+
             const order = new Order({
                 user: decoded._id,
                 products: productId,
+                deliverType: req.body.deliverType,
+                deliverCountry: req.body.deliverCountry,
+                deliverCity: req.body.deliverCity,
+                deliverStreet: req.body.deliverStreet,
+                deliverHouse: req.body.deliverHouse,
+                deliverBuilding: req.body.deliverBuilding,
+                deliverFlat: req.body.deliverFlat,
+                deliverPostalCode: req.body.deliverPostalCode,
+                isPrivateHouse: req.body.isPrivateHouse,
             })
 
             await order.save()
