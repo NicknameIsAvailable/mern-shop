@@ -55,12 +55,11 @@ app.post('/users/products/:id', checkAuth, handleValidationErrors, orderValidati
 // контроллер комментариев
 
 app.post('/products/:id/comments', commentValidation, checkAuth, handleValidationErrors, commentController.add)
-app.delete('/products/:id/comments/:commentId', commentValidation, checkAuth, commentController.remove)
+app.delete('/comments/:commentId', commentValidation, checkAuth, commentController.remove)
 app.patch('/comments/:commentId', checkAuth, commentValidation, handleValidationErrors, commentController.update)
 app.get('/comments', commentController.getAll)
 app.get('/products/:id/comments/', commentController.getAllOfProduct)
 app.get('/products/:id/comments/:commentId', commentController.getOne)
-app.delete('/comments/:commentId', commentController.remove)
 
 app.listen(4444, (err) => {
     if (err) {
