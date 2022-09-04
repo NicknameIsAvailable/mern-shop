@@ -10,6 +10,7 @@ import {
 import {userController, productController, commentController} from "./Controllers/index.js"
 import {checkAuth, handleValidationErrors, checkAdmin, checkDeliver} from "./utils/index.js";
 import * as orderController from "./Controllers/OrderController.js";
+import cors from "cors";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
@@ -18,6 +19,8 @@ mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.ne
 const app = express()
 
 app.use(express.json())
+app.use(cors())
+app.use('/uploads', express.static('uploads'))
 
 app.get('/', (req, res) => {
     res.send('Сервер запущен')

@@ -37,13 +37,13 @@ export const fetchBuyOne = createAsyncThunk('/products/fetchOrder/buyOne', async
 })
 
 const initialState = {
-    products: {
+    orders: {
         items: [],
         status: 'loading'
     }
 }
 
-const commentsSlice = createSlice({
+const ordersSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
@@ -140,4 +140,4 @@ const commentsSlice = createSlice({
     }
 })
 
-export const commentsReducer = commentsSlice.reducer
+export const ordersReducer = ordersSlice.reducer

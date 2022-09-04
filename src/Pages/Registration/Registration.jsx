@@ -1,14 +1,13 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-
-import {useDispatch, useSelector} from "react-redux";
-import {fetchRegister, selectIsAuth} from "../../Redux/Slices/auth";
 import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchRegister, selectIsAuth} from "../../Redux/Slices/auth.js";
 import {Navigate} from "react-router-dom";
+import {Container} from "@mui/material";
 
 const Registration = () => {
     const isAuth = useSelector(selectIsAuth)
@@ -19,9 +18,20 @@ const Registration = () => {
         formState: {errors, isValid}
     } = useForm({
         defaultValues: {
-            fullName: '',
+            name: '',
+            surname: '',
             email: '',
-            password: ''
+            mobilePhone: '',
+            password: '',
+            country: '',
+            city: '',
+            street: '',
+            house: '',
+            building: '',
+            flat: '',
+            postalCode: '',
+            isPrivateHouse: false,
+            avatarUrl: ''
         },
         mode: 'onChange'
     })
@@ -41,29 +51,85 @@ const Registration = () => {
     }
 
     return (
-        <Paper>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <Container>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <Typography variant="h5">
                     Создание аккаунта
                 </Typography>
                 <div>
                     <Avatar sx={{ width: 100, height: 100 }} />
                 </div>
-                <TextField  error={Boolean(errors.fullName?.message)}
-                            helperText={errors.fullName?.message}
-                            fullWidth {...register('fullName', {required: 'Укажите ваше полное имя'})} label="Полное имя" fullWidth />
-                <TextField  error={Boolean(errors.email?.message)}
-                            helperText={errors.email?.message}
-                            {...register('email', {required: 'Укажите email'})} label="E-Mail" fullWidth />
-                <TextField  error={Boolean(errors.password?.message)}
-                            helperText={errors.password?.message}
-                            type="password"
-                            fullWidth {...register('password', {required: 'Укажите пароль'})} label="Пароль"/>
-                <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
+
+                <h2>основные данные пользователя</h2>
+                <TextField
+                    error={Boolean(errors.name?.message)}
+                    helperText={errors.name?.message}
+                    fullWidth {...register('name', {required: 'Укажите ваше имя'})} label="Имя"
+                    />
+                <TextField
+                    error={Boolean(errors.surname?.message)}
+                    helperText={errors.surname?.message}
+                    fullWidth {...register('surname', {required: 'Укажите вашу фамилию'})} label="фамилия"
+                />
+                <TextField
+                    error={Boolean(errors.email?.message)}
+                    helperText={errors.email?.message}
+                    {...register('email', {required: 'Укажите email'})} label="E-Mail" fullWidth
+                    />
+                <TextField
+                    error={Boolean(errors.mobilePhone?.message)}
+                    type="mobilePhone"
+                    helperText={errors.mobilePhone?.message}
+                    {...register('mobilePhone', {required: 'Укажите номер телефона'})} label="Номер телефона" fullWidth
+                />
+                <TextField
+                    error={Boolean(errors.password?.message)}
+                    helperText={errors.password?.message}
+                    type="password"
+                    fullWidth {...register('password', {required: 'Укажите пароль'})} label="Пароль"
+                />
+
+                <h2>адрес</h2>
+                <TextField
+                    error={Boolean(errors.country?.message)}
+                    helperText={errors.country?.message}
+                    fullWidth {...register('country', {required: 'Укажите страну'})} label="Страна"
+                />
+                <TextField
+                    error={Boolean(errors.city?.message)}
+                    helperText={errors.city?.message}
+                    fullWidth {...register('city', {required: 'Укажите город'})} label="Город"
+                />
+                <TextField
+                    error={Boolean(errors.street?.message)}
+                    helperText={errors.street?.message}
+                    fullWidth {...register('street', {required: 'Укажите улицу'})} label="Улица"
+                />
+                <TextField
+                    error={Boolean(errors.house?.message)}
+                    helperText={errors.house?.message}
+                    fullWidth {...register('house', {required: 'Укажите дом'})} label="Дом"
+                />
+                <TextField
+                    error={Boolean(errors.building?.message)}
+                    helperText={errors.building?.message}
+                    fullWidth {...register('building', {required: 'Укажите корпус'})} label="Корпус"
+                />
+                <TextField
+                    error={Boolean(errors.postalCode?.message)}
+                    helperText={errors.postalCode?.message}
+                    fullWidth {...register('postaCode', {required: 'Укажите почтовый индекс'})} label="Почтовый индекс"
+                />
+                <Button
+                    disabled={!isValid} type="submit" size="large" variant="contained" fullWidth
+                    >
                     Зарегистрироваться
                 </Button>
+
             </form>
-        </Paper>
+        </Container>
     );
 };
 

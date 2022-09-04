@@ -18,7 +18,7 @@ const Header = () => {
                 </div>
                 </Link>
 
-                <Link to={`/profile/${userId}`}>
+                <Link to={`/profile/registration`}>
                 <div className="icons">
                     <AccountBoxIcon/>
                 </div>
