@@ -9,6 +9,7 @@ import Registration from "./Pages/Registration/Registration.jsx";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage.jsx";
 import {useDispatch} from "react-redux";
 import {fetchAuthMe} from "./Redux/Slices/auth.js";
+import Login from "./Pages/Login/Login.jsx";
 
 function App() {
     const dispatch = useDispatch()
@@ -23,10 +24,11 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/profile/:userId" element={<ProfilePage/>}/>
+                <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/profile/registration" element={<Registration/>}/>
-                <Route path="cart" element={<CartPage/>}/>
-                <Route path="product/:id" element={<ProductPage/>}/>
+                <Route path="/profile/login" element={<Login/>}/>
+                <Route path="/cart" element={<CartPage/>}/>
+                <Route path="/product/:id" element={<ProductPage/>}/>
             </Routes>
         </div>
     );

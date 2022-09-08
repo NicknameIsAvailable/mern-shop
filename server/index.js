@@ -49,7 +49,7 @@ app.delete('/users/cart/:id', checkAuth, productController.cartDelete);
 
 app.delete('/orders/:orderId', checkAuth, orderController.deleteOrder)
 app.get('/orders/', checkAuth, checkAdmin, orderController.getOrders)
-app.get('/users/orders/', checkAuth, orderController.getUserOrders)
+app.get('/users/orders/:userId', checkAuth, orderController.getUserOrders)
 app.get('/orders/:orderId/', checkAuth, orderController.getOrder)
 app.patch('/orders/:orderId', checkAuth, checkDeliver, handleValidationErrors, orderController.changeOrderStatus)
 app.post('/users/cart/',checkAuth, handleValidationErrors, orderValidation, orderController.createOrder)

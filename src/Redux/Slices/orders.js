@@ -11,9 +11,10 @@ export const fetchGetOrders = createAsyncThunk('/products/fetchOrders', async ()
     return data
 })
 
-export const fetchGetUserOrders = createAsyncThunk('/products/fetchOrder/user', async () => {
-    const {data} = await axios.get(`/users/orders/`)
-    return data
+export const fetchGetUserOrders = createAsyncThunk('/products/fetchOrder/user', async (id) => {
+    const {orders} = await axios.get(`/users/orders/${id}`)
+    console.log(orders)
+    return orders
 })
 
 export const fetchGetOrder = createAsyncThunk('/products/fetchOrder/getOrder', async (orderId) => {

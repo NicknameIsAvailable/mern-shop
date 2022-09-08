@@ -6,8 +6,8 @@ import Avatar from '@mui/material/Avatar';
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchRegister, selectIsAuth} from "../../Redux/Slices/auth.js";
-import {Navigate} from "react-router-dom";
-import {Container} from "@mui/material";
+import {Link, Navigate} from "react-router-dom";
+import {Checkbox, Container} from "@mui/material";
 
 const Registration = () => {
     const isAuth = useSelector(selectIsAuth)
@@ -47,7 +47,7 @@ const Registration = () => {
     }
 
     if (isAuth) {
-        return <Navigate to="/"/>
+        return <Navigate to="/profile"/>
     }
 
     return (
@@ -118,10 +118,21 @@ const Registration = () => {
                     fullWidth {...register('building', {required: 'Укажите корпус'})} label="Корпус"
                 />
                 <TextField
+                    error={Boolean(errors.flat?.message)}
+                    helperText={errors.flat?.message}
+                    fullWidth {...register('flat', {required: 'Укажите квартиру'})} label="Квартира"
+                />
+                <TextField
                     error={Boolean(errors.postalCode?.message)}
                     helperText={errors.postalCode?.message}
-                    fullWidth {...register('postaCode', {required: 'Укажите почтовый индекс'})} label="Почтовый индекс"
+                    fullWidth {...register('postalCode', {required: 'Укажите почтовый индекс'})} label="Почтовый индекс"
                 />
+                <Checkbox
+                    error={Boolean(errors.isPrivateHouse?.message)}
+                    helperText={errors.isPrivateHouse?.message}
+                    fullWidth {...register('isPrivateHouse')} label="Вы живете в частном доме?"
+                    {..."Вы живете в частном доме?"}/><p>Вы живете в частном доме?</p>
+
                 <Button
                     disabled={!isValid} type="submit" size="large" variant="contained" fullWidth
                     >
@@ -129,6 +140,9 @@ const Registration = () => {
                 </Button>
 
             </form>
+            <Link to={`/profile/login`}>
+                <p>у меня есть аккаунт</p>
+            </Link>
         </Container>
     );
 };
