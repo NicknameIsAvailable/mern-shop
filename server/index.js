@@ -11,6 +11,8 @@ import {userController, productController, commentController} from "./Controller
 import {checkAuth, handleValidationErrors, checkAdmin, checkDeliver} from "./utils/index.js";
 import * as orderController from "./Controllers/OrderController.js";
 import cors from "cors";
+import multer from "multer";
+import fs from "fs";
 
 mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.net/mern-shop?retryWrites=true&w=majority')
     .then(() => console.log("Подключение к базе данных прошло успешно"))
@@ -18,10 +20,23 @@ mongoose.connect('mongodb+srv://gnida:9uwlDDzvmligQFHL@cluster0.jsmzi.mongodb.ne
 
 const app = express()
 
-app.use(express.json())
+const storage = multer.diskStorage({
+    destination: (_, __, cb) => {
+        if (!fs.existsSync('uploads')) {
+            fs.mkdirSync('uploads');
+        }
+        cb(null, 'uploads');
+    },
+    filename: (_, file, cb) => {
+        cb(null, file.originalname);
+    },
+});
+
+const upload = multer({storage})
+
+app.use(express.json)
 app.use(cors())
 app.use('/uploads', express.static('uploads'))
-
 app.get('/', (req, res) => {
     res.send('Сервер запущен')
 })
@@ -38,7 +53,7 @@ app.delete('/users', checkAuth, userController.remove)
 // контроллер продуктов
 
 app.post('/products', checkAuth, checkAdmin, productCreateValidation, handleValidationErrors, productController.create)
-app.patch('/products/:productId', checkAuth, checkAdmin, productCreateValidation, handleValidationErrors, productController.update)
+app.patch('/products/:productId', checkAuth, checkAdmin, productCreateValidation, productController.update)
 app.delete('/products/:id', checkAuth, checkAdmin, productController.remove);
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
@@ -52,8 +67,8 @@ app.get('/orders/', checkAuth, checkAdmin, orderController.getOrders)
 app.get('/users/orders/:userId', checkAuth, orderController.getUserOrders)
 app.get('/orders/:orderId/', checkAuth, orderController.getOrder)
 app.patch('/orders/:orderId', checkAuth, checkDeliver, handleValidationErrors, orderController.changeOrderStatus)
-app.post('/users/cart/',checkAuth, handleValidationErrors, orderValidation, orderController.createOrder)
-app.post('/users/products/:id', checkAuth, handleValidationErrors, orderValidation, orderController.buyOne)
+app.post('/users/cart/',checkAuth, orderValidation, orderController.createOrder)
+app.post('/users/products/:id', checkAuth, orderValidation, orderController.buyOne)
 
 // контроллер комментариев
 

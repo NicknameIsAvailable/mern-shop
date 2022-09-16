@@ -20,16 +20,16 @@ function App() {
     return (
         <div className="app">
 
-            <Header/>
-
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/profile" element={<ProfilePage/>}/>
-                <Route path="/profile/registration" element={<Registration/>}/>
-                <Route path="/profile/login" element={<Login/>}/>
-                <Route path="/cart" element={<CartPage/>}/>
-                <Route path="/product/:id" element={<ProductPage/>}/>
-            </Routes>
+            {/*<Header/>*/}
+            это бэкенд шаблон
+            {/*<Routes>*/}
+            {/*    <Route path="/" element={<Home/>}/>*/}
+            {/*    <Route path="/profile" element={<ProfilePage/>}/>*/}
+            {/*    <Route path="/profile/registration" element={<Registration/>}/>*/}
+            {/*    <Route path="/profile/login" element={<Login/>}/>*/}
+            {/*    <Route path="/cart" element={<CartPage/>}/>*/}
+            {/*    <Route path="/product/:id" element={<ProductPage/>}/>*/}
+            {/*</Routes>*/}
         </div>
     );
 }

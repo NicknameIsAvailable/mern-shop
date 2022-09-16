@@ -37,10 +37,12 @@ const ProfilePage = () => {
         return (
             <Container className="profilePage">
                 <h1>Профиль</h1>
-                <h3>{userData.name} {userData.surname}</h3>
-                <h3>Почта: {userData.email}</h3>
-                <h3>Номер телефона: {userData.mobilePhone}</h3>
+                <p>{userData.name} {userData.surname}</p>
+                <p>Почта: {userData.email}</p>
+                <p>Номер телефона: {userData.mobilePhone}</p>
+                <p>адрес: {userData.country} {userData.city} {userData.street} дом {userData.house} {userData.building} квартира {userData.flat} почтовый индекс {userData.postalCode}</p>
                 <p>Пользовательский ID: {userData._id}</p>
+                <p>Роль: {userData.role}</p>
 
                 <h1>Заказы</h1>
                 {ordersList}

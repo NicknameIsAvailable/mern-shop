@@ -1,27 +1,43 @@
 import React from 'react';
-import {Container} from '@mui/material';
+import Grid from '@mui/material/Grid';
+
+import {useDispatch, useSelector} from "react-redux";
+
+import {fetchAllProducts} from "../../Redux/Slices/products.js";
 import ProductCard from "./components/ProductCard/ProductCard.jsx";
-import productArr from "../../Components/productArr.js";
-import "./Home.css"
+import {Container} from "@mui/material";
+import axios from "../../axios.js";
 
-const Home = () => {
+export const Home = () => {
+    const dispatch = useDispatch()
+    const {products} = useSelector((state) => state.products)
 
-    const productList = productArr.map((product) =>
-        <ProductCard
-            id={product.id}
-            title={product.title}
-            price={product.price}
-            imageUrl={product.imageUrl}
-            description={product.description}/>
-    )
+    const isPostLoading = products.status === 'loading'
+
+    React.useEffect(() => {
+        axios.get("/products")
+    }, [])
+
+    console.log(products)
+
 
     return (
-        <div className="home">
-            <Container className="ProductList">
-                {productList}
-            </Container>
-        </div>
+        <Container>
+        {(isPostLoading ? [...Array(24)] : products.items).map((obj, index) =>
+            isPostLoading ? (
+                <ProductCard key={index} isLoading={true}/>
+            ) : (
+                <ProductCard
+                    id={obj._id}
+                    title={obj.title}
+                    images={obj.images}
+                    tags={obj.tags}
+                    count={obj.count}
+                    price={obj.price}
+                />
+            ))}
+        </Container>
     );
 };
 
-export default Home;
+export default Home

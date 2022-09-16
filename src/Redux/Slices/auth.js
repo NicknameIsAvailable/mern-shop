@@ -108,17 +108,8 @@ const authSlice = createSlice({
             state.status = 'error'
             state.data = null
         },
-        [fetchDeleteUsers.pending] : (state) => {
-            state.status = 'loading'
-            state.data = null
-        },
-        [fetchDeleteUsers.fulfilled] : (state, action) => {
-            state.status = 'loaded'
-            state.data = action.payload
-        },
-        [fetchDeleteUsers.rejected] : (state) => {
-            state.status = 'error'
-            state.data = null
+        [fetchDeleteUsers.pending] : (state, action) => {
+            state.users.items = state.users.items.filter(item => item._id !== action.payload)
         }
     }
 })
