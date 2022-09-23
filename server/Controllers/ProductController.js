@@ -148,7 +148,7 @@ export const getOne = async (req, res) => {
 
                 res.json(doc);
             },
-        ).populate('user');
+        );
     } catch (err) {
         console.log(err);
         res.status(500).json({

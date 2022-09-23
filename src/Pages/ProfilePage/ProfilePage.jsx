@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Container} from "@mui/material";
+import {Button, Card, Container} from "@mui/material";
 import axios from "../../axios.js";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout, selectIsAuth} from "../../Redux/Slices/auth.js";
 import {fetchGetUserOrders} from "../../Redux/Slices/orders.js";
@@ -14,15 +14,20 @@ const ProfilePage = () => {
     const userData = useSelector((state) => state.auth.data)
     fetchGetUserOrders(userData._id)
 
+    //TODO Сделать адекватное отображение заказов
+    //TODO Сделать страницу заказа
+
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
         axios.get(`/users/${userData._id}`)
     })
 
     const ordersList = userData.orders.map(order =>
-        <div className="order">
-            {order}
-        </div>
+        <Link to={`/orders/${order}`}>
+            <Card style={{padding: "16px", margin: "16px 0"}} className="order">
+                {order}
+            </Card>
+        </Link>
     )
 
     const onCLickLogout = () => {

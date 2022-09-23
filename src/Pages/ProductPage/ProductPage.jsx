@@ -1,21 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container} from "@mui/material"
 import {useParams} from "react-router-dom";
-import productArr from "../../Components/productArr.js"
 import CartButton from "../../Components/CartButton.jsx";
+import axios from "../../axios.js";
 
 const ProductPage = () => {
-
+//TODO: получение продукта
     const {id} = useParams()
 
-    const product = productArr.find(product => product.id === id)
+    const [data, setData] = useState()
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`/products/${id}`).then((res) => {
+            setData(res.data)
+            setIsLoading(false)
+        })
+            .catch(err => {
+                console.warn(err)
+                alert('Ошибка при получении продукта')
+            })
+    }, [])
+
+    console.log(data)
 
     return (
         <Container className="productPage">
-            <h1>{product.title}</h1>
-            <img src={product.imageUrl} alt={product} width="480"/>
-            <p>{product.description}</p>
-            <CartButton price={product.price}/>
+
+            {isLoading ?
+                <h1>Загрузка...</h1>
+                :
+                <>
+                <h1>{data.title}</h1>
+                <img src={data.images} alt={data} width="480"/>
+                <p>{data.description}</p>
+                <CartButton price={data.price}/>
+                </>
+            }
         </Container>
     );
 };

@@ -11,6 +11,8 @@ const CartPage = () => {
                  description={product.description}/>
     )
 
+    //TODO сделать отображение товаров в корзине
+
     return (
         <Container className="cartPage">
             <h1>Корзина</h1>

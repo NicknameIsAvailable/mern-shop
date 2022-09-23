@@ -7,10 +7,11 @@ import CartButton from "../../../../Components/CartButton.jsx";
 const ProductCard = (props) => {
     return (
         <Card className="ProductCard">
-            <img src={props.imageUrl} width="300" alt="картинка"/>
+            <img src={props.images} width="300" alt="картинка"/>
             <Link to={`/product/${props.id}`}>
             <h1>{props.title}</h1>
             </Link>
+            <h3>#{props.id}</h3>
             <p>{props.description}</p>
             <CartButton price={props.price} id={props.id}/>
         </Card>
