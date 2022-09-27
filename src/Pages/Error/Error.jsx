@@ -2,11 +2,11 @@ import React from 'react';
 import {Container} from "@mui/material";
 import {Link} from "react-router-dom";
 
-const Error = () => {
+const Error = (props) => {
     return (
         <Container>
             <h1>
-                Нет доступа
+                {props.message || "ошибка"}
             </h1>
             <h2>
                 <Link to={"/"}>

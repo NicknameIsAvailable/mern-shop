@@ -221,3 +221,29 @@ export const cartDelete = async (req, res) => {
         }
     }
 }
+
+// получение товаров из корзины
+
+export const getCart = async (req, res) => {
+    const token = (req.headers.authorization).replace(/Bearer\s?/, '')
+    const decoded = jwt.verify(token, secret)
+    const user = await User.findById(decoded._id)
+
+    if (token) {
+        try {
+            const products = await Product.find(
+                {'_id': {$in: user.cart}}
+            )
+            console.log(user.cart, products)
+            res.json(products)
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).json({
+                success: false,
+                message: "Не удалось получить корзину"
+            });
+        }
+    }
+}
+

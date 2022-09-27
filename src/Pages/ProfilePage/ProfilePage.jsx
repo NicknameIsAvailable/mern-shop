@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Button, Card, Container} from "@mui/material";
 import axios from "../../axios.js";
 import {Link, Navigate} from "react-router-dom";
@@ -9,8 +9,6 @@ import {fetchGetUserOrders} from "../../Redux/Slices/orders.js";
 const ProfilePage = () => {
     const isAuth = useSelector(selectIsAuth)
     const dispatch = useDispatch()
-    const [data, setData] = useState()
-    const [isLoading, setIsLoading,] = useState();
     const userData = useSelector((state) => state.auth.data)
     fetchGetUserOrders(userData._id)
 

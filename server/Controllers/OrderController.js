@@ -200,8 +200,12 @@ export const getUserOrders = async (req, res) => {
     if(token) {
         try {
             const decoded = jwt.verify(token, secret)
-            const orders = await Order.find({user: decoded._id})
-            res.json(orders)
+            const user = User.findById(decoded._id).exec()
+            const products = await Product.find(
+                {'_id': {$in: user.orders}}
+            )
+            console.log(user.orders, products)
+            res.json(products)
         } catch (err) {
             console.log(err);
             res.status(500).json({

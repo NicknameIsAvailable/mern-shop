@@ -34,6 +34,11 @@ export const fetchDeleteCartProduct = createAsyncThunk('/products/fetchProducts/
     await axios.delete(`/users/cart/${id}`)
 })
 
+export const fetchCart = createAsyncThunk('/users/cart/fetch', async () => {
+    const {data} = await axios.get('/users/cart')
+    return data
+})
+
 const initialState = {
     products: {
         items: [],
@@ -134,7 +139,19 @@ const productsSlice = createSlice({
         [fetchDeleteProducts.rejected] : (state) => {
             state.status = 'error'
             state.data = null
-        }
+        },
+        [fetchCart.pending] : (state) => {
+            state.status = 'loading'
+            state.data = null
+        },
+        [fetchCart.fulfilled] : (state, action) => {
+            state.status = 'loaded'
+            state.data = action.payload
+        },
+        [fetchCart.rejected] : (state) => {
+            state.status = 'error'
+            state.data = null
+        },
     }
 })
 

@@ -1,41 +1,41 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./Header.css"
-import { Container, TextField } from '@mui/material';
+import {Button, Container, TextField} from '@mui/material';
 import {Link} from "react-router-dom"
 import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
-export const userId = "1yZDGDovrkrGdMJl"
+import {useSelector} from "react-redux";
+import {selectIsAuth} from "../../../../Redux/Slices/auth.js";
 
 const Header = () => {
+    const isAuth = useSelector(selectIsAuth)
     return (
         <header>
-            <Container>
+                <Container>
                 <Link to="/">
-                <div className="icons">
+                <Button className="icons">
                     <EmojiFoodBeverageIcon/>
-                </div>
+                </Button>
                 </Link>
 
                 <Link to={`/profile/registration`}>
-                <div className="icons">
+                <Button className="icons">
                     <AccountBoxIcon/>
-                </div>
+                </Button>
                 </Link>
 
                 <Link to="/cart">
-                    <div className="icons">
+                    <Button disabled={!isAuth} className="icons">
                         <ShoppingCartIcon/>
-                    </div>
+                    </Button>
                 </Link>
 
                 <div className="search">
                     <TextField id="standard-basic" label="Standard" variant="standard" />
                 </div>
-
-            </Container>
-        </header>
+                </Container>
+            </header>
     );
 };
 

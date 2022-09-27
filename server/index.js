@@ -43,13 +43,14 @@ app.delete('/products/:id', checkAuth, checkAdmin, productController.remove);
 app.get('/products', productController.getAll)
 app.get('/products/:id', productController.getOne)
 app.post('/users/cart/:id', checkAuth, handleValidationErrors, productController.addCart);
+app.get(`/users/cart`, checkAuth, handleValidationErrors, productController.getCart)
 app.delete('/users/cart/:id', checkAuth, productController.cartDelete);
 
 // контроллер заказов
 
 app.delete('/orders/:orderId', checkAuth, orderController.deleteOrder)
 app.get('/orders/', checkAuth, checkAdmin, orderController.getOrders)
-app.get('/users/orders/:userId', checkAuth, orderController.getUserOrders)
+app.get('/users/orders/', checkAuth, handleValidationErrors, orderController.getUserOrders)
 app.get('/orders/:orderId/', checkAuth, orderController.getOrder)
 app.patch('/orders/:orderId', checkAuth, checkDeliver, handleValidationErrors, orderController.changeOrderStatus)
 app.post('/users/cart/',checkAuth, handleValidationErrors, orderValidation, orderController.createOrder)
