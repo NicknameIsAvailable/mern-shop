@@ -197,19 +197,25 @@ export const getOrder = async (req, res) => {
 
 export const getUserOrders = async (req, res) => {
     const token = (req.headers.authorization).replace(/Bearer\s?/, '')
-    if(token) {
+    const decoded = jwt.verify(token, secret)
+    const user = await User.findById(decoded._id)
+
+    if (token) {
         try {
-            const decoded = jwt.verify(token, secret)
-            const user = User.findById(decoded._id).exec()
-            const products = await Product.find(
-                {'_id': {$in: user.orders}}
+
+            const orderIds = user.orders.map((order) => order.toString());
+
+            const orders = await Order.find(
+                {'_id': {$in: orderIds}}
             )
-            console.log(user.orders, products)
-            res.json(products)
-        } catch (err) {
+
+            res.json(orders)
+        }
+        catch (err) {
             console.log(err);
             res.status(500).json({
-                message: 'Не удалось получить заказы',
+                success: false,
+                message: "Не удалось получить заказы"
             });
         }
     }
