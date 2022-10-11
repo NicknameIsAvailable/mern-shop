@@ -24,10 +24,12 @@ const Login = () => {
     const onSubmit = async (values) => {
         const data = await dispatch(fetchLogin(values))
         if (!data.payload) {
-            alert('Не удалось войти в аккаунт')
+            return alert('Не удалось войти в аккаунт')
         }
         if ('token' in data.payload) {
             window.localStorage.setItem('token', data.payload.token)
+        } else {
+            alert('Не удалось авторизоваться ')
         }
     }
 

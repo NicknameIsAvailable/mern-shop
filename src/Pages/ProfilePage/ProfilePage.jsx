@@ -12,9 +12,6 @@ const ProfilePage = () => {
     const [orders, setOrders] = useState();
     const [isLoading, setIsLoading] = useState(true)
 
-    //TODO Сделать адекватное отображение заказов
-    //TODO Сделать страницу заказа
-
     useEffect(() => {
         // eslint-disable-next-line no-unused-expressions
         axios.get(`/users/${userData._id}`)
@@ -52,23 +49,22 @@ const ProfilePage = () => {
                             <h3>Загрузка</h3>
                         </Card>
                     ) : (
-                    <Link to={`/orders/${order._id}`}>
                         <Card style={{padding: "16px", margin: "16px 0"}} className="order">
                             <h3>Заказ #{order._id}</h3>
                             <List>
                             {order.products.map((product) =>
                                 <>
                                     <Link to={`/product/${product._id}`}>
-                                    <h3>{product.title}</h3>
-                                    <p>{product.description}</p>
-                                    <h4>{product.price}P</h4>
+                                        <img src={product.images} alt={product.title} width="200" />
+                                        <h3>{product.title}</h3>
+                                        <p>{product.description}</p>
+                                        <h4>{product.price}P</h4>
                                     </Link>
                                     <Divider/>
                                 </>
                             )}
                             </List>
                         </Card>
-                    </Link>
                     ))}
                 <Button variant="outlined" color="error" onClick={() => {onCLickLogout()}}>Выйти из аккаунта</Button>
             </Container>

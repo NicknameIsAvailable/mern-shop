@@ -2,11 +2,17 @@ import React, {useState} from 'react';
 import {Card, Button, ButtonGroup} from "@mui/material";
 import "./Product.css"
 import {Link} from "react-router-dom";
+import axios from "../../../../axios.js"
 
 const Product = (props) => {
 
     const [productCount, setProductCount] = useState(1)
     const [deleteProduct, setDeleteProduct] = useState(false)
+
+    const deleteCart = async (id) => {
+        await axios.delete(`/users/cart/${id}`)
+        console.log(props.cart)
+    }
 
     return (
         <Card className="product">
@@ -27,7 +33,7 @@ const Product = (props) => {
                     color="error"
                     className="deleteButton"
                     variant={deleteProduct ? "contained" : "outlined"}
-                    onClick={() => setDeleteProduct(true)}
+                    onClick={() => deleteCart(props._id)}
                 >Удалить</Button>
             </div>
         </Card>

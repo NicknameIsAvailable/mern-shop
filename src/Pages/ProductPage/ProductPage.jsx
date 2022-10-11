@@ -5,7 +5,6 @@ import CartButton from "../../Components/CartButton.jsx";
 import axios from "../../axios.js";
 
 const ProductPage = () => {
-//TODO: получение продукта
     const {id} = useParams()
 
     const [data, setData] = useState()

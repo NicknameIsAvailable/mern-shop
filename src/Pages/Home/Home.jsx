@@ -3,10 +3,12 @@ import {Container} from '@mui/material';
 import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import "./Home.css"
 import axios from "../../axios";
+import {useSelector} from "react-redux";
 
 const Home = () => {
-    //TODO вспомнить какую еще хуйню ты забыл
 
+    // const userData = useSelector((state) => state.auth.data)
+    // const [user, setUser] = useState();
     const [data, setData] = useState()
     const [isLoading, setIsLoading] = useState(true);
 
@@ -19,6 +21,13 @@ const Home = () => {
                 console.warn(err)
                 alert('Ошибка при получении продуктов')
             })
+        // axios.get(`/users/${userData._id}`).then((res) => {
+        //     setUser(res.data)
+        //     setIsLoading(false)
+        // }).catch(err => {
+        //     console.warn(err)
+        //     alert('Ошибка при получении пользователя')
+        // })
     }, [])
 
     // console.log(data)

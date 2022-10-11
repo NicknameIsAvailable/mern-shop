@@ -22,40 +22,45 @@ const CartPage = () => {
             })
     }, []);
 
-    console.log(cart)
-
     if (isAuth) {
+        if (!isLoading)
+        {
 
-        return (
-            <Container className="cartPage">
-                <h1>Корзина</h1>
+            const cartPrices = cart?.map(product => product.price)
+            const pricesSum = cartPrices?.reduce((sum, item) => sum + item.price, 0)
+            // console.log(cartPrices?, pricesSum)
 
-                {(isLoading ? [...Array(5)] : cart).map((product) =>
-                    isLoading ? (
-                        <Product
-                            title='Загрузка'
-                        />
-                    ) : (
-                        <Product title={product.title}
-                                 images={product.images}
-                                 description={product.description}
-                                _id={product._id}
-                        />
-                    ))}
-            </Container>
-        )
+            return (
+                <Container className="cartPage">
+                    <h1>Корзина</h1>
+
+                    <h3>Товаров в корзине {cart.length}</h3>
+                    <h3>Общая стоимость: {pricesSum}</h3>
+
+                    {(isLoading ? [...Array(5)] : cart).map((product) =>
+                        isLoading ? (
+                            <Product
+                                title='Загрузка'
+                            />
+                        ) : (
+                            <Product title={product.title}
+                                     images={product.images}
+                                     description={product.description}
+                                     _id={product._id}
+                                     cart={cart}
+                            />
+                        ))}
+                </Container>
+            )
+        } else {
+            return <h1>Загрузка</h1>
+        }
     } else {
         alert("Войдите в аккаунт")
         return (
             <Navigate to={"/cartError"} message={"войдите в аккаунт, чтобы пользоваться корзиной"}/>
         )
     }
-
-
-
-    //TODO сделать отображение товаров в корзине
-
-
 };
 
 export default CartPage;

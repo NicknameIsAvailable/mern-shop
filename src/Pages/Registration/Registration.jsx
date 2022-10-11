@@ -39,10 +39,12 @@ const Registration = () => {
     const onSubmit = async (values) => {
         const data = await dispatch(fetchRegister(values))
         if (!data.payload) {
-            alert('Не удалось зарегистрироваться')
+            return alert('Не удалось зарегистрироваться')
         }
         if ('token' in data.payload) {
             window.localStorage.setItem('token', data.payload.token)
+        } else {
+            alert('Не удалось авторизоваться ')
         }
     }
 
